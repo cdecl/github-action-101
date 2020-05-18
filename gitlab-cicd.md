@@ -1,5 +1,5 @@
 
-# gitlab-cicd-101
+# Gitlab CI/CD 101
 Gitlab CI/CD 활용을 위한 기본 내용 
 
 - Contents

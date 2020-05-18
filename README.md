@@ -1,5 +1,5 @@
 
-# github-action-101
+# Github Actions 101
 Gihub Action 활용을 위한 기본 내용 
 
 ## Contents
@@ -11,7 +11,7 @@ Gihub Action 활용을 위한 기본 내용
 		- [MSBuild & Nuget](#msbuild--nuget)
 		- [Container Image 활용](#container-image-%ED%99%9C%EC%9A%A9)
 		- [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
-- [Gitlab CI/CD 101](#gitlab-cicd-101)
+- [Gitlab CI/CD 101](gitlab-cicd.md)
 
 ## Github Actions
 - Github 에서 제공하는 Workflow 툴 
@@ -213,5 +213,3 @@ jobs:
 ![](images/2020-05-18-15-24-33.png)
 
 
-## Gitlab CI/CD 101
-- [Gitlab CI/CD 101](gitlab-cicd.md)
