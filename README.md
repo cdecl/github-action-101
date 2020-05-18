@@ -175,6 +175,7 @@ jobs:
 
 
 #### Go build 및 Docker image registry 
+- Tag push only : push tags : '*.*' 
 - CGO_ENABLED=0 : libc dynamic linked binary 비활성화를 위해
 
 ```yaml
@@ -182,7 +183,7 @@ name: Go
 
 on:
   push:
-    branches: [ master ]
+    tags: '*.*'
 
 jobs:
   build:
