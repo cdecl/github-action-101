@@ -150,4 +150,39 @@ build_stage:
 
 ```
 
+
+#### Go build 및 Docker image registry 
+- golang 이미지에서 소스 빌드 후, docker build-push
+- `artifacts` 를 활용, stage간 디렉토리 공유 
+
+```yaml
+image: docker 
+
+services:
+  - docker:dind
+  
+stages:                   
+  - build
+  - deploy
+
+build_stage:
+  image: golang 
+  stage: build
+  script:
+    - go build 
+    - mkdir ./output
+    - cp go-sitecheck ./output/
+  artifacts:
+    paths: 
+      - ./output
+
+deploy_stage:
+  stage: deploy
+  script:  
+    - cp ./output/go-sitecheck .
+    - docker build . --tag cdecl/go-sitecheck-test
+    - echo ${DOCKERHUB_PASS} | docker login -u cdecl --password-stdin
+    - docker push cdecl/go-sitecheck-test
+```
+
 ![](images/2020-05-18-18-08-57.png)
