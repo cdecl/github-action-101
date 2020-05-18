@@ -30,8 +30,8 @@ Gihub Action 활용을 위한 기본 내용
 - Actions Tab
 - 참고 : awesome-actions https://github.com/sdras/awesome-actions		
 
-![](images/2020-05-18-14-29-13.png)
- 
+![](images/2020-05-18-16-31-11.png)
+
 - workflow
 	- runs-on: Virtual machine
 		- ubuntu, macos, windows server 제공 
