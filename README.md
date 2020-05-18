@@ -11,6 +11,7 @@ Gihub Action 활용을 위한 기본 내용
 		- [MSBuild & Nuget](#msbuild--nuget)
 		- [Container Image 활용](#container-image-%ED%99%9C%EC%9A%A9)
 		- [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
+- [Gitlab CI/CD 101](#gitlab-cicd-101)
 
 ## Github Actions
 - Github 에서 제공하는 Workflow 툴 
@@ -40,7 +41,7 @@ Gihub Action 활용을 위한 기본 내용
 			- Windows Server : https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md
 	- steps : 
 		- uses: 예약된 Actions 실행이나 Apps 통합을 통해 Apps 사용 환경 구성 
-			- ex> uses: actions/checkout@v2 : git checkout 을 실행 
+			- ex> uses: actions/checkout@v2 : git checkout 실행 
 			- ex> uses: nuget/setup-nuget@v1 : nuget apps setup 
 			- ex> uses: microsoft/setup-msbuild@v1 : msbuild setup
 		- run: run command 지정 
@@ -210,3 +211,7 @@ jobs:
 ```
 
 ![](images/2020-05-18-15-24-33.png)
+
+
+## Gitlab CI/CD 101
+- [Gitlab CI/CD 101](gitlab-cicd.md)
