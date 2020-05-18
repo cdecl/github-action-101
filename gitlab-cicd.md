@@ -12,6 +12,7 @@ Gitlab CI/CD 활용을 위한 기본 내용
     - [Pipeline 예제](#pipeline-%EC%98%88%EC%A0%9C)
       - [Docker Build & Registry Push](#docker-build--registry-push)
       - [Custome Image 사용](#custome-image-%EC%82%AC%EC%9A%A9)
+			- [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
 
 ## Gitlab CI/CD
 - Gitlab 에서 제공하는 CI/CD 목적의 Workflow 툴 
@@ -148,6 +149,41 @@ build_stage:
   tags:
     - centos24-docker          # custome runner, docker executor
 
+```
+
+
+#### Go build 및 Docker image registry 
+- golang 이미지에서 소스 빌드 후, docker build-push
+- `artifacts` 를 활용, stage간 디렉토리 공유 
+
+```yaml
+image: docker 
+
+services:
+  - docker:dind
+  
+stages:                   
+  - build
+  - deploy
+
+build_stage:
+  image: golang 
+  stage: build
+  script:
+    - go build 
+    - mkdir ./output
+    - cp go-sitecheck ./output/
+  artifacts:
+    paths: 
+      - ./output
+
+deploy_stage:
+  stage: deploy
+  script:  
+    - cp ./output/go-sitecheck .
+    - docker build . --tag cdecl/go-sitecheck-test
+    - echo ${DOCKERHUB_PASS} | docker login -u cdecl --password-stdin
+    - docker push cdecl/go-sitecheck-test
 ```
 
 ![](images/2020-05-18-18-08-57.png)
