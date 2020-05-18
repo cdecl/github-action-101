@@ -175,6 +175,7 @@ jobs:
 
 
 #### Go build 및 Docker image registry 
+- CGO_ENABLED=0 : libc dynamic linked binary 비활성화를 위해
 
 ```yaml
 name: Go
@@ -203,7 +204,7 @@ jobs:
         go get -v -t -d ./...
 
     - name: Build
-      run: go build -v .
+      run: CGO_ENABLED=0 go build -v .
 
     - name: Build the Docker image
       run: docker build . --tag cdecl/go-sitecheck
