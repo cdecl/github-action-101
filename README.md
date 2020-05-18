@@ -5,7 +5,7 @@ Gihub Action 활용을 위한 기본 내용
 ## Contents
 - [Github Actions](#github-actions)
 	- [Runner 종류](#runner-%EC%A2%85%EB%A5%98)
-	- [WorkFlow 기본 Template](#workflow-%EA%B8%B0%EB%B3%B8-template)
+	- [Actions Basic](#actions-basic)
 	- [Actions 예제](#actions-%EC%98%88%EC%A0%9C)
 		- [Docker Build & Registry Push](#docker-build--registry-push)
 		- [MSBuild & Nuget](#msbuild--nuget)
