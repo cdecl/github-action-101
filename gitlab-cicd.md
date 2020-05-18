@@ -12,7 +12,7 @@ Gitlab CI/CD 활용을 위한 기본 내용
     - [Pipeline 예제](#pipeline-%EC%98%88%EC%A0%9C)
       - [Docker Build & Registry Push](#docker-build--registry-push)
       - [Custome Image 사용](#custome-image-%EC%82%AC%EC%9A%A9)
-			- [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
+      - [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
 
 
 ## Gitlab CI/CD
