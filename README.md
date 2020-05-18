@@ -50,25 +50,25 @@ Gihub Action 활용을 위한 기본 내용
 name: CI                            # workflow 이름 
 
 on:                                 # Triggers Event 
-	push:
-		branches: [ master ]
-	pull_request:
-		branches: [ master ]
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
-	build:                            # Single job name
-		runs-on: ubuntu-latest          # virtual machine
+  build:                            # Single job name
+    runs-on: ubuntu-latest          # virtual machine
 
-		steps:
-		- uses: actions/checkout@v2
+    steps:
+    - uses: actions/checkout@v2
 
-		- name: Run a one-line script
-			run: echo Hello, world!
+    - name: Run a one-line script
+      run: echo Hello, world!
 
-		- name: Run a multi-line script
-			run: |
-				echo Add other actions to build,
-				echo test, and deploy your project.
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project.
 ```
 
 ### Actions 예제
@@ -82,22 +82,22 @@ jobs:
 name: Docker Image CI
 
 on:
-	push:
-		branches: [ master ]
+  push:
+    branches: [ master ]
 
 jobs:
-	build:
-		runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-		steps:
-		- uses: actions/checkout@v2
+    steps:
+    - uses: actions/checkout@v2
 
-		- name: Build the Docker image
-			run: docker build . --tag cdecl/gcc-boost
-		- name: docker login
-			run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u cdecl --password-stdin
-		- name: docker push
-			run: docker push cdecl/gcc-boost
+    - name: Build the Docker image
+      run: docker build . --tag cdecl/gcc-boost
+    - name: docker login
+      run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u cdecl --password-stdin
+    - name: docker push
+      run: docker push cdecl/gcc-boost
 ```
 
 ![](images/2020-05-18-14-40-10.png)
@@ -113,27 +113,27 @@ jobs:
 name: C/C++ CI
 
 on:
-	push:
-		branches: [ master ]
+  push:
+    branches: [ master ]
 
 jobs:
-	build:
-		runs-on: windows-2019
-		
-		steps:
-		- uses: actions/checkout@v2
-		- uses: nuget/setup-nuget@v1
-		- uses: microsoft/setup-msbuild@v1
-			
-		- name: nuget restore 
-			run: | 
-				cd src 
-				nuget restore asb.sln
-				
-		- name: build
-			run: |
-				cd src 
-				msbuild asb.vcxproj /p:configuration=release /p:platform=x64
+  build:
+    runs-on: windows-2019
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: nuget/setup-nuget@v1
+    - uses: microsoft/setup-msbuild@v1
+      
+    - name: nuget restore 
+      run: | 
+        cd src 
+        nuget restore asb.sln
+        
+    - name: build
+      run: |
+        cd src 
+        msbuild asb.vcxproj /p:configuration=release /p:platform=x64
 ```
 
 
@@ -145,25 +145,25 @@ jobs:
 name: C/C++ CI
 
 on:
-	push:
-		branches: [ master ]
+  push:
+    branches: [ master ]
 
 jobs:
-	build:
-		runs-on: ubuntu-latest
-		container: cdecl/gcc-boost
+  build:
+    runs-on: ubuntu-latest
+    container: cdecl/gcc-boost
 
-		steps:
-		- uses: actions/checkout@v2
-		
-		- name: check 
-			run: | 
-				g++ --version
-						
-		- name: make 
-			run: |
-				cd src 
-				make
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: check 
+      run: | 
+        g++ --version
+            
+    - name: make 
+      run: |
+        cd src 
+        make
 ```
 
 
@@ -175,38 +175,38 @@ jobs:
 name: Go
 
 on:
-	push:
-		tags: '*.*'
+  push:
+    tags: '*.*'
 
 jobs:
-	build:
-		name: Build
-		runs-on: ubuntu-latest
-		steps:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
 
-		- name: Set up Go 1.x
-			uses: actions/setup-go@v2
-			with:
-				go-version: ^1.13
-			id: go
+    - name: Set up Go 1.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: ^1.13
+      id: go
 
-		- name: Check out code into the Go module directory
-			uses: actions/checkout@v2
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
 
-		- name: Get dependencies
-			run: |
-				go get -v -t -d ./...
+    - name: Get dependencies
+      run: |
+        go get -v -t -d ./...
 
-		- name: Build
-			run: CGO_ENABLED=0 go build -v .
+    - name: Build
+      run: CGO_ENABLED=0 go build -v .
 
-		- name: Build the Docker image
-			run: docker build . --tag cdecl/go-sitecheck
+    - name: Build the Docker image
+      run: docker build . --tag cdecl/go-sitecheck
 
-		- name: docker login & push
-			run: | 
-				echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u cdecl --password-stdin
-		docker push cdecl/go-sitecheck
+    - name: docker login & push
+      run: | 
+        echo '${{ secrets.DOCKERHUB_PASS }}' | docker login -u cdecl --password-stdin
+    docker push cdecl/go-sitecheck
 ```
 
 ![](images/2020-05-18-15-24-33.png)
