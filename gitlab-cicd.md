@@ -2,17 +2,18 @@
 # Gitlab CI/CD 101
 Gitlab CI/CD 활용을 위한 기본 내용 
 
-- Contents
-  - [Gitlab CI/CD](#gitlab-cicd)
-    - [Gitlab-runner](#gitlab-runner)
-    - [gitlab-runner 세팅 (Self hosting)](#gitlab-runner-%EC%84%B8%ED%8C%85-self-hosting)
-      - [Installing the Runner](#installing-the-runner)
-      - [Registering Runners](#registering-runners)
-    - [Pipeline Configuration Basic](#pipeline-configuration-basic)
-    - [Pipeline 예제](#pipeline-%EC%98%88%EC%A0%9C)
-      - [Docker Build & Registry Push](#docker-build--registry-push)
-      - [Custome Image 사용](#custome-image-%EC%82%AC%EC%9A%A9)
-      - [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
+## Contents
+  - [Gitlab CI/CD 101](#gitlab-cicd-101)
+    - [Gitlab CI/CD](#gitlab-cicd)
+      - [Gitlab-runner](#gitlab-runner)
+      - [gitlab-runner 세팅 (Self hosting)](#gitlab-runner-%EC%84%B8%ED%8C%85-self-hosting)
+        - [Installing the Runner](#installing-the-runner)
+        - [Registering Runners](#registering-runners)
+      - [Pipeline Configuration Basic](#pipeline-configuration-basic)
+      - [Pipeline 예제](#pipeline-%EC%98%88%EC%A0%9C)
+        - [Docker Build & Registry Push](#docker-build--registry-push)
+        - [Custome Image 사용](#custome-image-%EC%82%AC%EC%9A%A9)
+        - [Go build 및 Docker image registry (artifacts)](#go-build-%EB%B0%8F-docker-image-registry-artifacts)
 
 
 ## Gitlab CI/CD
@@ -153,7 +154,7 @@ build_stage:
 ```
 
 
-#### Go build 및 Docker image registry 
+#### Go build 및 Docker image registry (artifacts)
 - golang 이미지에서 소스 빌드 후, docker build-push
 - `artifacts` 를 활용, stage간 디렉토리 공유 
 
