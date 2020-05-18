@@ -3,15 +3,20 @@
 Gihub Action 활용을 위한 기본 내용 
 
 ## Contents
-- [Github Actions](#github-actions)
-	- [Runner 종류](#runner-%EC%A2%85%EB%A5%98)
-	- [Actions Basic](#actions-basic)
-	- [Actions 예제](#actions-%EC%98%88%EC%A0%9C)
-		- [Docker Build & Registry Push](#docker-build--registry-push)
-		- [MSBuild & Nuget](#msbuild--nuget)
-		- [Container Image 활용](#container-image-%ED%99%9C%EC%9A%A9)
-		- [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
+- [Github Actions 101](#github-actions-101)
+	- [Contents](#contents)
+	- [Github Actions](#github-actions)
+		- [Runner 종류](#runner-%EC%A2%85%EB%A5%98)
+		- [Actions Basic](#actions-basic)
+		- [Actions 예제](#actions-%EC%98%88%EC%A0%9C)
+			- [Docker Build & Registry Push](#docker-build--registry-push)
+			- [MSBuild & Nuget](#msbuild--nuget)
+			- [Container Image 활용](#container-image-%ED%99%9C%EC%9A%A9)
+			- [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
+			- [Persisting workflow data using artifacts](#persisting-workflow-data-using-artifacts)
 - [Gitlab CI/CD 101](gitlab-cicd.md)
+
+
 
 ## Github Actions
 - Github 에서 제공하는 Workflow 툴 
@@ -29,7 +34,10 @@ Gihub Action 활용을 위한 기본 내용
 
 ### Actions Basic
 - Actions Tab
-- 참고 : awesome-actions https://github.com/sdras/awesome-actions		
+- Workflow syntax for GitHub Actions 
+  - https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
+- awesome-actions 
+  - https://github.com/sdras/awesome-actions		
 
 ![](images/2020-05-18-16-31-11.png)
 
@@ -213,3 +221,45 @@ jobs:
 ![](images/2020-05-18-15-24-33.png)
 
 
+#### Persisting workflow data using artifacts
+- Artifacts 활용 지속적인 workflow 데이터 관리 
+  - actions/upload-artifact@v1 / actions/download-artifact@v1
+- 순서보장을 위해 needs 사용 : 병렬수행 
+
+```yaml
+name: artifact test
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-stage:
+    runs-on: ubuntu-latest
+    container: gcc
+    steps:
+    - uses: actions/checkout@v2
+    - name: check
+      run: |
+        mkdir output
+        cat /etc/*-release > output/release.txt
+    - name: upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: output
+        path: output
+      
+  test-stage:
+    needs: build-stage
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name:  download artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: output
+    - name: check
+      run: |
+        dir 
+        type output\release.txt
+```
