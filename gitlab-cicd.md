@@ -157,6 +157,7 @@ build_stage:
 #### Go build 및 Docker image registry (artifacts)
 - golang 이미지에서 소스 빌드 후, docker build-push
 - `artifacts` 를 활용, stage간 디렉토리 공유 
+  - https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html
 
 ```yaml
 image: docker 
