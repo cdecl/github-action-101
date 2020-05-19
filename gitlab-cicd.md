@@ -114,7 +114,7 @@ deploy_stage:
 - 변수 등록 : [Settings] - [CI / CD] - [Variables] 
   - ${DOCKERHUB_PASS}
 
-```
+```yaml
 image: docker          # docker client
 
 services:
@@ -136,7 +136,7 @@ build_stage:
 - tags를 통해 runner 선택
   - gitlab.com 의 경우 tags 가 없으면 Shared Runners로 실행 
 
-```
+```yaml
 image: cdecl/gcc-boost
 
 stages:
