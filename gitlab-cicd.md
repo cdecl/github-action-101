@@ -3,18 +3,19 @@
 Gitlab CI/CD 활용을 위한 기본 내용 
 
 ## Contents
-  - [Gitlab CI/CD 101](#gitlab-cicd-101)
-    - [Gitlab CI/CD](#gitlab-cicd)
-      - [Gitlab-runner](#gitlab-runner)
-      - [gitlab-runner 세팅 (Self hosting)](#gitlab-runner-%EC%84%B8%ED%8C%85-self-hosting)
-        - [Installing the Runner](#installing-the-runner)
-        - [Registering Runners](#registering-runners)
-      - [Pipeline Configuration Basic](#pipeline-configuration-basic)
-      - [Pipeline 예제](#pipeline-%EC%98%88%EC%A0%9C)
-        - [Docker Build & Registry Push](#docker-build--registry-push)
-        - [Custome Image 사용](#custome-image-%EC%82%AC%EC%9A%A9)
-        - [Go build 및 Docker image registry (artifacts)](#go-build-%EB%B0%8F-docker-image-registry-artifacts)
-
+- [Gitlab CI/CD 101](#gitlab-cicd-101)
+	- [Contents](#contents)
+	- [Gitlab CI/CD](#gitlab-cicd)
+		- [Gitlab-runner](#gitlab-runner)
+		- [gitlab-runner 세팅 (Self hosting)](#gitlab-runner-%EC%84%B8%ED%8C%85-self-hosting)
+			- [Installing the Runner](#installing-the-runner)
+			- [Registering Runners](#registering-runners)
+		- [Pipeline Configuration Basic](#pipeline-configuration-basic)
+		- [Pipeline 예제](#pipeline-%EC%98%88%EC%A0%9C)
+			- [Docker Build & Registry Push](#docker-build--registry-push)
+			- [Custome Image 사용](#custome-image-%EC%82%AC%EC%9A%A9)
+			- [Go build 및 Docker image registry (artifacts)](#go-build-%EB%B0%8F-docker-image-registry-artifacts)
+			- [Runner 정보](#runner-%EC%A0%95%EB%B3%B4)
 
 ## Gitlab CI/CD
 - Gitlab 에서 제공하는 CI/CD 목적의 Workflow 툴 
@@ -188,5 +189,7 @@ deploy_stage:
     - echo ${DOCKERHUB_PASS} | docker login -u cdecl --password-stdin
     - docker push cdecl/go-sitecheck-test
 ```
+
+#### Runner 정보 
 
 ![](images/2020-05-18-18-08-57.png)
