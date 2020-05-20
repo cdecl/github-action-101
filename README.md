@@ -14,9 +14,8 @@ Gihub Action 활용을 위한 기본 내용
 			- [Container Image 활용](#container-image-%ED%99%9C%EC%9A%A9)
 			- [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
 			- [Persisting workflow data using artifacts](#persisting-workflow-data-using-artifacts)
+			- [Create release, upload asset file](#create-release-upload-asset-file)
 - [Gitlab CI/CD 101](gitlab-cicd.md)
-
-
 
 ## Github Actions
 - Github 에서 제공하는 Workflow 툴 
@@ -263,3 +262,72 @@ jobs:
         dir 
         type output\release.txt
 ```
+
+#### Create release, upload asset file 
+- path 파일이 변경되면 trigger : .github/workflows/ccpp.yml
+- create release : actions/create-release@v1
+- upload asset : actions/upload-release-asset@v1
+- 참고 : https://github.com/cdecl/asb/blob/master/.github/workflows/ccpp.yml
+
+```yaml
+name: C/C++ CI
+
+on:
+  push:
+    paths:
+    - '.github/workflows/ccpp.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: file 
+      run: |
+        mkdir release
+        cat 'data ' > release/data.txt
+
+    - name: upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: release-linux
+        path: release
+             
+  build-release:
+    needs: 
+      - build
+    runs-on: ubuntu-latest
+    
+    steps: 
+    - name: download artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: release-linux      
+    - name: zip
+      run: |
+        zip -r release.zip release
+        
+    - name: create release
+      id: create_release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      uses: actions/create-release@v1
+      with:
+        tag_name: 'v1.0'
+        release_name: Release v1.0
+        draft: false
+        prerelease: false
+
+    - name: upload release asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}  # create_release 의 결과 
+        asset_path: ./release.zip
+        asset_name: release.zip
+        asset_content_type: application/zip
+  ```
+
+  ![](images/2020-05-21-01-28-36.png)
