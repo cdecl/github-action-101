@@ -58,6 +58,7 @@ Runner registered successfully. Feel free to start it, but if it's running alrea
 ```
 
 ```sh
+# inline 
 sudo gitlab-runner register \
   --non-interactive \
   --url "https://gitlab.com/" \
@@ -67,17 +68,19 @@ sudo gitlab-runner register \
   --description "docker-runner" \
   --tag-list "docker" \
 
-# docker in docker settings 
+
 sudo gitlab-runner register \
   --non-interactive \
-  --url "https://gitlab.com/" \
+  --url "http://centos.cdecl.net/" \
   --registration-token "PROJECT_REGISTRATION_TOKEN" \
   --executor "docker" \
-  --docker-image alpine:latest \
+  --docker-image alpine \
   --description "docker-runner" \
   --tag-list "docker" \
   --env "DOCKER_TLS_CERTDIR=" \
-  --docker-privileged=true
+  --docker-privileged=true \
+  --docker-volumes "/ansible:/ansible" \
+  --docker-extra-hosts "centos.cdecl.net:192.168.0.20"
 ```
 
 ## Pipeline Configuration Basic
