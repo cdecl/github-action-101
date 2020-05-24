@@ -57,6 +57,29 @@ shell
 Runner registered successfully. Feel free to start it, but if it's running already the config should be automatically reloaded! 
 ```
 
+```sh
+sudo gitlab-runner register \
+  --non-interactive \
+  --url "https://gitlab.com/" \
+  --registration-token "PROJECT_REGISTRATION_TOKEN" \
+  --executor "docker" \
+  --docker-image alpine:latest \
+  --description "docker-runner" \
+  --tag-list "docker" \
+
+# docker in docker settings 
+sudo gitlab-runner register \
+  --non-interactive \
+  --url "https://gitlab.com/" \
+  --registration-token "PROJECT_REGISTRATION_TOKEN" \
+  --executor "docker" \
+  --docker-image alpine:latest \
+  --description "docker-runner" \
+  --tag-list "docker" \
+  --env "DOCKER_TLS_CERTDIR=" \
+  --docker-privileged=true
+```
+
 ### Pipeline Configuration Basic
 - GitLab CI/CD Pipeline Configuration Reference
   - https://docs.gitlab.com/ee/ci/yaml/ 
