@@ -1,41 +1,40 @@
 
-# Gitlab CI/CD 101
-Gitlab CI/CD 활용을 위한 기본 내용 
-
-## Contents
-- [Gitlab CI/CD 101](#gitlab-cicd-101)
-	- [Contents](#contents)
-	- [Gitlab CI/CD](#gitlab-cicd)
-		- [Gitlab-runner](#gitlab-runner)
-		- [gitlab-runner 세팅 (Self hosting)](#gitlab-runner-%EC%84%B8%ED%8C%85-self-hosting)
-			- [Installing the Runner](#installing-the-runner)
-			- [Registering Runners](#registering-runners)
-		- [Pipeline Configuration Basic](#pipeline-configuration-basic)
-		- [Pipeline 예제](#pipeline-%EC%98%88%EC%A0%9C)
-			- [Docker Build & Registry Push](#docker-build--registry-push)
-			- [Custome Image 사용](#custome-image-%EC%82%AC%EC%9A%A9)
-			- [Go build 및 Docker image registry (artifacts)](#go-build-%EB%B0%8F-docker-image-registry-artifacts)
-			- [Runner 정보](#runner-%EC%A0%95%EB%B3%B4)
-		- [Git Commit/Push](#git-commitpush)
-
-## Gitlab CI/CD
+# Gitlab CI/CD 101 
 - Gitlab 에서 제공하는 CI/CD 목적의 Workflow 툴 
 - Auto DevOps or gitlab-runner 에서 실행 
 - Setup CI/CD 를 통해 세팅 
   - .gitlab-ci.yml 파일에 기술 
- 
 
-### Gitlab-runner 
+## Contents
+<!-- TOC -->
+
+- [Gitlab CI/CD 101](#gitlab-cicd-101)
+	- [Contents](#contents)
+	- [Gitlab-Runner](#gitlab-runner)
+	- [Gitlab-Runner 세팅 (Self hosting)](#gitlab-runner-%EC%84%B8%ED%8C%85-self-hosting)
+		- [Installing the Runner](#installing-the-runner)
+		- [Registering Runners](#registering-runners)
+	- [Pipeline Configuration Basic](#pipeline-configuration-basic)
+	- [Pipeline 예제](#pipeline-%EC%98%88%EC%A0%9C)
+		- [Docker Build & Registry Push](#docker-build--registry-push)
+		- [Custome Image 사용](#custome-image-%EC%82%AC%EC%9A%A9)
+		- [Go build 및 Docker image registry (artifacts)](#go-build-%EB%B0%8F-docker-image-registry-artifacts)
+			- [Runner 정보](#runner-%EC%A0%95%EB%B3%B4)
+		- [Git Commit/Push](#git-commitpush)
+
+<!-- /TOC -->
+
+## Gitlab-Runner 
 - gitlab-runner : .gitlab-ci.yml 기반 파이프 라인 구성 
   - Shared Runners : gitlab.com 에서 hosting 해주는 Runner
   - Self hosting Runners : 별도 머신을 통해 Runner 설치 
 
-### gitlab-runner 세팅 (Self hosting)
+## Gitlab-Runner 세팅 (Self hosting)
 
-#### Installing the Runner
+### Installing the Runner
 - https://docs.gitlab.com/runner/install/linux-repository.html
 
-#### Registering Runners
+### Registering Runners
 - https://docs.gitlab.com/runner/register/index.html
 - Interactive register runner 
 
@@ -81,7 +80,7 @@ sudo gitlab-runner register \
   --docker-privileged=true
 ```
 
-### Pipeline Configuration Basic
+## Pipeline Configuration Basic
 - GitLab CI/CD Pipeline Configuration Reference
   - https://docs.gitlab.com/ee/ci/yaml/ 
 - Pipeline
@@ -133,9 +132,9 @@ deploy_stage:
 ![](images/2020-05-18-17-51-51.png)
 
 
-### Pipeline 예제
+## Pipeline 예제
 
-#### Docker Build & Registry Push
+### Docker Build & Registry Push
 - 변수 등록 : [Settings] - [CI / CD] - [Variables] 
   - ${DOCKERHUB_PASS}
 
@@ -156,7 +155,7 @@ build_stage:
     - docker push cdecl/gcc-boost-test
 ```
 
-#### Custome Image 사용 
+### Custome Image 사용 
 - cdecl/gcc-boost  활용 
 - tags를 통해 runner 선택
   - gitlab.com 의 경우 tags 가 없으면 Shared Runners로 실행 
@@ -179,7 +178,7 @@ build_stage:
 ```
 
 
-#### Go build 및 Docker image registry (artifacts)
+### Go build 및 Docker image registry (artifacts)
 - golang 이미지에서 소스 빌드 후, docker build-push
 - `artifacts` 를 활용, stage간 디렉토리 공유 
   - https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html
@@ -217,6 +216,7 @@ deploy_stage:
 #### Runner 정보 
 
 ![](images/2020-05-18-18-08-57.png)
+
 
 ### Git Commit/Push 
 - 계정 Token 생성후, 인증으로 사용 

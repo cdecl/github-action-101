@@ -1,28 +1,29 @@
 
 # Github Actions 101
-Gihub Action 활용을 위한 기본 내용 
-
-## Contents
-- [Github Actions 101](#github-actions-101)
-	- [Contents](#contents)
-	- [Github Actions](#github-actions)
-		- [Runner 종류](#runner-%EC%A2%85%EB%A5%98)
-		- [Actions Basic](#actions-basic)
-		- [Actions 예제](#actions-%EC%98%88%EC%A0%9C)
-			- [Docker Build & Registry Push](#docker-build--registry-push)
-			- [MSBuild & Nuget](#msbuild--nuget)
-			- [Container Image 활용](#container-image-%ED%99%9C%EC%9A%A9)
-			- [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
-			- [Persisting workflow data using artifacts](#persisting-workflow-data-using-artifacts)
-			- [Create release, upload asset file](#create-release-upload-asset-file)
-
-## Github Actions
 - Github 에서 제공하는 Workflow 툴 
 - GitHub-hosted Runner or Self-Hosted Runner 에서 실행 
 - Actions 탭을 통해서 Template을 선택하고 Yaml 파일로 Task 내용을 기술
 	- .github/workflows 디렉토리 밑에 위치 
 
-### Runner 종류 
+## Contents
+<!-- TOC -->
+
+- [Github Actions 101](#github-actions-101)
+	- [Contents](#contents)
+	- [Runner 종류](#runner-%EC%A2%85%EB%A5%98)
+	- [Actions Basic](#actions-basic)
+		- [Workflow](#workflow)
+	- [Actions 예제](#actions-%EC%98%88%EC%A0%9C)
+		- [Docker Build & Registry Push](#docker-build--registry-push)
+		- [MSBuild & Nuget](#msbuild--nuget)
+		- [Container Image 활용](#container-image-%ED%99%9C%EC%9A%A9)
+		- [Go build 및 Docker image registry](#go-build-%EB%B0%8F-docker-image-registry)
+		- [Persisting workflow data using artifacts](#persisting-workflow-data-using-artifacts)
+		- [Create release, upload asset file](#create-release-upload-asset-file)
+
+<!-- /TOC -->
+
+## Runner 종류 
 - GitHub-hosted Runner : MS Azure 가상머신에서 실행 
 	- Public Repository : 무료
 	- Private Repository : 2000분/월 무료 
@@ -30,7 +31,7 @@ Gihub Action 활용을 위한 기본 내용
 	- https://help.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners
 
 
-### Actions Basic
+## Actions Basic
 - Actions Tab
 - Workflow syntax for GitHub Actions 
   - https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
@@ -39,18 +40,18 @@ Gihub Action 활용을 위한 기본 내용
 
 ![](images/2020-05-18-16-31-11.png)
 
-- workflow
-	- runs-on: Virtual machine
-		- ubuntu, macos, windows server 제공 
-		- 기본 Package or apps 가 등록되어 있음 : https://github.com/actions/virtual-environments
-			- Ubuntu : https://github.com/actions/virtual-environments/blob/master/images/linux/Ubuntu1804-README.md
-			- Windows Server : https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md
-	- steps : 
-		- uses: 예약된 Actions 실행이나 Apps 통합을 통해 Apps 사용 환경 구성 
-			- ex> uses: actions/checkout@v2 : git checkout 실행 
-			- ex> uses: nuget/setup-nuget@v1 : nuget apps setup 
-			- ex> uses: microsoft/setup-msbuild@v1 : msbuild setup
-		- run: run command 지정 
+### Workflow
+- runs-on: Virtual machine
+  - ubuntu, macos, windows server 제공 
+  - 기본 Package or apps 가 등록되어 있음 : https://github.com/actions/virtual-environments
+    - Ubuntu : https://github.com/actions/virtual-environments/blob/master/images/linux/Ubuntu1804-README.md
+    - Windows Server : https://github.com/actions/virtual-environments/blob/master/images/win/Windows2019-Readme.md
+- steps : 
+  - uses: 예약된 Actions 실행이나 Apps 통합을 통해 Apps 사용 환경 구성 
+    - ex> uses: actions/checkout@v2 : git checkout 실행 
+    - ex> uses: nuget/setup-nuget@v1 : nuget apps setup 
+    - ex> uses: microsoft/setup-msbuild@v1 : msbuild setup
+  - run: run command 지정 
 
 
 ```yaml
@@ -78,9 +79,9 @@ jobs:
         echo test, and deploy your project.
 ```
 
-### Actions 예제
+## Actions 예제
 
-#### Docker Build & Registry Push
+### Docker Build & Registry Push
 - ubuntu-latest 이미지에는 Docker Daemon 활성화됨
 - secrets 변수 : [Settings] - [Secrets] 에서 변수 세팅 (DOCKERHUB_PASS)
 	- ${{ secrets.DOCKERHUB_PASS }}
@@ -109,7 +110,7 @@ jobs:
 
 ![](images/2020-05-18-14-40-10.png)
 
-#### MSBuild & Nuget 
+### MSBuild & Nuget 
 - Windows 서버 이미지 MSBuild 기반 빌드 
 - msbuild 및 nuget setup 
 	- uses: nuget/setup-nuget@v1
@@ -144,7 +145,7 @@ jobs:
 ```
 
 
-#### Container Image 활용 
+### Container Image 활용 
 - docker container (cdecl/gcc-boost)를 활용 Task 실행 
 	- container: cdecl/gcc-boost
 
@@ -174,7 +175,7 @@ jobs:
 ```
 
 
-#### Go build 및 Docker image registry 
+### Go build 및 Docker image registry 
 - Tag push only : push tags : '*.*' 
 - CGO_ENABLED=0 : libc dynamic linked binary 비활성화를 위해
 
@@ -219,7 +220,7 @@ jobs:
 ![](images/2020-05-18-15-24-33.png)
 
 
-#### Persisting workflow data using artifacts
+### Persisting workflow data using artifacts
 - Artifacts 활용 지속적인 workflow 데이터 관리 
   - actions/upload-artifact@v1 / actions/download-artifact@v1
 - 순서보장을 위해 needs 사용 : 병렬수행 
@@ -262,7 +263,7 @@ jobs:
         type output\release.txt
 ```
 
-#### Create release, upload asset file 
+### Create release, upload asset file 
 - path 파일이 변경되면 trigger : .github/workflows/ccpp.yml
 - create release : actions/create-release@v1
 - upload asset : actions/upload-release-asset@v1
