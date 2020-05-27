@@ -147,6 +147,10 @@ image: docker          # docker client
 services:
   - docker:dind        # docker deamon
 
+#services:
+#  - name: docker:dind
+#    command: ["--insecure-registry=registry.bucker.net"]
+
 stages:
 - build
 
